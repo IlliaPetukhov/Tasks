@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 style="padding-top: 15px">TO DO LIST</h1>
+    <button style="position: absolute; right: 100px">
+        <a  href={% url "add-task" %}>Add task</a>
+    </button>
+    <br>
+    {% if tasks_list %}
+        {% for task in tasks_list %}
+            {% if task.is_done == False %}
+                <div style="display: inline">
+                    <b style="display: inline">{{ task.content }}<p style="color: #9C1A1C; display: inline; padding-left: 10px">Not done</p>
+                        <form style="position: absolute; right: 500px; margin-top: -13px" method="post" action="{% url "change-status" pk=task.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: #32951b; color: white;">Complete</button>
+                        </form>
+                        <form style="position: absolute; right: 420px; margin-top: -13px" method="post" action="{% url "update-task" pk=task.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: #4ac1f7; color: white;">Update</button>
+                        </form>
+                        <form style="position: absolute; right: 347px; margin-top: -13px" method="post" action="{% url "delete-task" pk=task.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: red; color: white;">Delete</button>
+                        </form>
+                    </b>
+                </div>
+            {% else %}
+                <div style="display: inline">
+                    <b style="display: inline">{{ task.content }}<p style="color: #32951b; display: inline; padding-left: 10px">Done</p>
+                        <form style="position: absolute; right: 500px; margin-top: -13px" method="post" action="{% url 'change-status' pk=task.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: #9C1A1C; color: white;">Undo</button>
+                        </form>
+                        <form style="position: absolute; right: 420px; margin-top: -13px" method="post" action="{% url "update-task" pk=task.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: #4ac1f7; color: white;">Update</button>
+                        </form>
+                        <form style="position: absolute; right: 347px; margin-top: -13px" method="post" action="{% url "delete-task" pk=task.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: red; color: white;">Delete</button>
+                        </form>
+                    </b>
+                </div>
+            {% endif %}
+            <br>
+            <p style="display: inline; color: #4ac1f7">created: </p><p style="color: #4d4d4d; opacity: 50%; display: inline">{{ task.formatted_created_at }} </p>
+            {% if task.deadline %}
+            <p style="display: inline; color: #9C1A1C"> deadline:  </p><p style="color: #4d4d4d; opacity: 50%; display: inline"> {{ task.deadline }} </p>
+            {% endif %}
+            <br>
+            <br>
+        {% endfor %}
+    {% endif %}
+{% endblock%}
