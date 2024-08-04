@@ -1,0 +1,29 @@
+{% if is_paginated %}
+               <div style="margin-bottom: 80px" class="row text-center py-2">
+    <div class="col-12 mx-auto">
+        <ul class="pagination pagination-primary m-4">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                <a class="page-link" href="?page= {{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-left"><-</i>
+                    </span>
+                </a>
+            </li>
+            {% endif %}    
+            <li class="page-item active" style="padding: 10px">
+                <p style="color: black" class="pagination-primary">{{ page_obj.number }} of {{ paginator.num_pages }}</p>
+            </li>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page= {{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">
+                        <i class="fa fa-angle-double-right">-></i>
+                    </span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+               </div>
+{% endif %}
